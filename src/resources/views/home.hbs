@@ -1,0 +1,46 @@
+<div class="banner">
+  <img src="https://i.ibb.co/8NTwKBt/banner.jpg" alt="" />
+  <div></div>
+</div>
+<div class="home">
+  <div class="container">
+    <h2>Khóa học mới cập nhật</h2>
+    <div class="list_course">
+      {{#each data.newCourse}}
+        <a href="/khoa-hoc/{{this._id}}" class="intro_card">
+          <div class="img_container">
+            <img src="{{this.img}}" alt="" />
+          </div>
+          <div class="name">{{this.name}}</div>
+          <div class="tutor">{{this.tutor.name}}</div>
+          <div class="rating_info">
+            <span>{{this.rating}}</span>
+            <img src="https://i.ibb.co/Ldn3Hv0/star.png" alt="" />
+            ({{this.votes}})
+          </div>
+          <div class="price">{{this.price}}</div>
+        </a>
+      {{/each}}
+    </div>
+  </div>
+  <div class="container">
+    <h2>Khóa học hot</h2>
+    <div class="list_course">
+      {{#each data.hotCourse}}
+        <a href="/khoa-hoc/{{this._id}}" class="intro_card">
+          <div class="img_container">
+            <img src="{{this.img}}" alt="" />
+          </div>
+          <div class="name">{{this.name}}</div>
+          <div class="tutor">{{this.tutor.name}}</div>
+          <div class="rating_info">
+            <span>{{this.rating}}</span>
+            <img src="https://i.ibb.co/Ldn3Hv0/star.png" alt="" />
+            ({{this.votes}})
+          </div>
+          <div class="price">{{this.price}}</div>
+        </a>
+      {{/each}}
+    </div>
+  </div>
+</div>

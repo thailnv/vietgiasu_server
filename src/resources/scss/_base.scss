@@ -1,0 +1,47 @@
+body {
+  background: white;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: #5f86b9;
+  text-decoration: none;
+}
+* {
+  font-family: sf pro text, -apple-system, BlinkMacSystemFont, Roboto, segoe ui,
+    Helvetica, Arial, sans-serif, apple color emoji, segoe ui emoji,
+    segoe ui symbol;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+.pleft1em {
+  padding-left: 1em;
+}
+.pright1em {
+  padding-right: 1em;
+}
+.hide {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.show_flex {
+  display: flex !important;
+}
+.show_grid {
+  display: grid !important;
+}
+.row {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+.fntNormal {
+  font-size: 18px !important;
+}

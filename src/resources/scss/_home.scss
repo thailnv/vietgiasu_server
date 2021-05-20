@@ -1,0 +1,77 @@
+.home {
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  width: 100%;
+  color: #3c3b37;
+}
+.container {
+  margin-top: 1.5em;
+  border-radius: 0.25em;
+  border: solid 1px rgb(158, 158, 158);
+  padding-left: 2em;
+  padding-right: 2em;
+}
+.container h2 {
+  margin-bottom: 0.75em;
+  margin-left: 0.25em;
+  margin-top: 1em;
+}
+.list_course {
+  display: flex;
+  flex-wrap: wrap;
+}
+.list_course .intro_card {
+  width: 20%;
+  color: #3c3b37;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  margin-bottom: 2em;
+}
+.intro_card .img_container {
+  display: block;
+  width: 100%;
+  padding-top: 60%; /* 1:1 Aspect Ratio */
+  position: relative;
+  margin: auto;
+  border-radius: 0.25em;
+  overflow: hidden;
+  box-shadow: 0 0 4px rgb(70, 70, 70);
+}
+.img_container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.intro_card .name {
+  font-weight: bold;
+  height: 3em;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.intro_card .tutor {
+  font-size: 12px;
+  color: #73726c;
+}
+.intro_card .rating_info {
+  font-size: 14px;
+  color: #73726c;
+}
+.intro_card .rating_info span {
+  color: rgb(177, 130, 0);
+  font-weight: bold;
+}
+.intro_card .rating_info img {
+  height: 15px;
+}
+.intro_card .price {
+  font-weight: bold;
+}

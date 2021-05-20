@@ -1,0 +1,22 @@
+<div class="course">
+  <div class="container">
+    <h2>Danh sách khóa học</h2>
+    <div class="list_course">
+      {{#each courses}}
+        <a href="/khoa-hoc/{{this._id}}" class="intro_card">
+          <div class="img_container">
+            <img src="{{this.img}}" alt="" />
+          </div>
+          <div class="name">{{this.name}}</div>
+          <div class="tutor">{{this.tutor.name}}</div>
+          <div class="rating_info">
+            <span>{{this.rating}}</span>
+            <img src="/img/star.png" alt="" />
+            ({{this.votes}})
+          </div>
+          <div class="price">{{this.price}}</div>
+        </a>
+      {{/each}}
+    </div>
+  </div>
+</div>
