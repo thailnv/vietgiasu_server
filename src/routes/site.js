@@ -2,13 +2,11 @@ const express = require("express");
 const router = express.Router();
 const siteController = require("../app/controllers/SiteController");
 
-router.post("/api/user/login", siteController.login);
+router.post("/dang-nhap", siteController.login);
 
-router.post("/api/user/logout", siteController.logout);
+router.post("/dang-ky", siteController.signup);
 
-router.post("/api/user/signup", siteController.signup);
-
-router.get("/", siteController.index);
+router.get("/trang-chu", siteController.index);
 
 router.get("*", siteController.notfound);
 

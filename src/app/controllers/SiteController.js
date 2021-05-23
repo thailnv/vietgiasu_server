@@ -6,7 +6,7 @@ class SiteController {
     let data = {};
     await Course.findHotCourse(data);
     await Course.findNewCourse(data);
-    res.render("home", { data });
+    res.json({ data });
   }
 
   async signup(req, res, next) {
@@ -22,7 +22,7 @@ class SiteController {
     }
   }
 
-  async login(req, res, next) {
+  async login(req, res) {
     let data = {
       email: req.body.email,
       password: req.body.password,
@@ -32,7 +32,9 @@ class SiteController {
     await User.login(data, result);
 
     console.log(result);
-    res.json(result);
+    res.json({
+      ...result,
+    });
   }
 
   logout(req, res, next) {

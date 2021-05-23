@@ -9,13 +9,20 @@ class CourseController {
     let totalBenefit = course.plan.length;
     course.plan1 = course.plan.slice(0, Math.ceil(totalBenefit / 2));
     course.plan2 = course.plan.slice(Math.ceil(totalBenefit / 2));
-    res.render("course_info", { course });
+    res.json({
+      course,
+    });
   }
   async findAll(req, res, next) {
     let data = {};
     await Course.findAll(data);
     let { courses } = data;
-    res.render("course", { courses });
+    res.json({ courses });
+  }
+  async regis(req, res, next) {
+    res.json({
+      status: "success",
+    });
   }
 }
 
