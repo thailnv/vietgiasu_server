@@ -42,28 +42,42 @@ const sendEmail = async (emailOptions) => {
   await emailTransporter.sendMail(emailOptions);
 };
 
-function createRemindEmail(mInfo) {
+function createConfirmEmail(mInfo) {
+  console.log(mInfo.tutor_email);
   return {
-    subject: `Đăng ký khóa học`,
-    text: `Số điện thoại ${mInfo.phone} muốn đăng ký khóa học ${mInfo.course} của bạn !`,
-    to: "thailnv263@gmail.com",
-    from: "18521381@gm.uit.edu.vn",
+    subject: `Xác nhận dạy hoc`,
+    to: mInfo.tutor_email,
+    from: `Gia sư Việt <18521381@gm.uit.edu.vn>`,
+    html: `<div style="text-align: center">
+    Khóa học "<strong>${mInfo.course_name}</strong>" vừa có học viên đăng ký.
+    Vui lòng nhấn vào nút dưới đây để xác nhận hoặc từ chối.
+  </div>
+  <a style="display:block; width: fit-content; font-weight: bold;
+  margin: auto; padding: 8px; text-decoration: none;
+  margin-top: 0.5em; color: white; border-radius: 4px;
+  text-align: center; background: coral;"
+    href="${mInfo.confirmLink}">CHI TIẾT</a>`,
   };
 }
 
 const scheduleEmail = async (req, res, next) => {
   try {
-    let emailMessage = createRemindEmail(req.body);
+    let emailMessage = createConfirmEmail(req.body);
     await sendEmail(emailMessage)
       .then()
       .catch((err) => {
         console.log(err);
       });
-    console.log("email scheduled");
-    next();
+    console.log("email sent");
+    res.status(200).json({
+      status: "success",
+    });
   } catch (err) {
     console.log(err);
-    next();
+    res.status(500).json({
+      status: "fail",
+      message: "Có lỗi xảy ra vui lòng thử lại sau",
+    });
   }
 };
 module.exports = {

@@ -6,7 +6,7 @@ const { scheduleEmail } = require("../middleware/mailService");
 
 router.get("/:id", CourseController.findOne);
 
-router.post("/dang-ky", scheduleEmail, CourseController.regis);
+router.post("/dang-ky", CourseController.regis, scheduleEmail);
 
 router.get("/", CourseController.findAll);
 

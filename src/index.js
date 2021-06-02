@@ -1,27 +1,26 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-const path = require("path");
+const dotenv = require("dotenv");
+
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 //auto get index.js
 const route = require("./routes/index");
 
-//HTTP logger
+//set env config path
+dotenv.config({
+  path: "./config.env",
+});
+
 //db connect
 const db = require("./config/db");
 db.connect();
 
-//image folder
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.json());
 
-app.use(bodyParser.json());
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.set("trust proxy", 1); // trust first proxy
+app.use(express.urlencoded({ extended: true }));
 
 // routing
 route(app);
