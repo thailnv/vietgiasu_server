@@ -1,6 +1,7 @@
 const Convert = require("../../util/mongoose");
 const Course = require("../models/Course");
 const Order = require("../models/Order");
+const { User } = require("../models/User");
 
 class CourseController {
   async findOne(req, res, next) {
@@ -22,6 +23,11 @@ class CourseController {
 
   async regis(req, res, next) {
     try {
+      let user = await User.findById(req.body.user_id);
+      let course = await Course.findById(req.body.course_id);
+      console.log(user, course);
+      user.balance = user.balance - course.price * req.body.time.length;
+      await user.save();
       let order = await Order.create({
         student: req.body.user_id,
         course: req.body.course_id,

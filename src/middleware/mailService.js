@@ -48,9 +48,7 @@ function createConfirmEmail(mInfo) {
     subject: `Xác nhận dạy hoc`,
     to: mInfo.tutor_email,
     from: `Gia sư Việt <18521381@gm.uit.edu.vn>`,
-    html: `<div style="text-align: center">
-    Khóa học "<strong>${mInfo.course_name}</strong>" vừa có học viên đăng ký.
-    Vui lòng nhấn vào nút dưới đây để xác nhận hoặc từ chối.
+    html: `<div style="text-align: center">Khóa học "<strong>${mInfo.course_name}</strong>" vừa có học viên đăng ký.Vui lòng nhấn vào nút dưới đây để xác nhận hoặc từ chối.
   </div>
   <a style="display:block; width: fit-content; font-weight: bold;
   margin: auto; padding: 8px; text-decoration: none;

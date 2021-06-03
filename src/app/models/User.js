@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema(
       type: [String],
       default: undefined,
     },
+    img: String,
+    description: String,
   },
   {
     versionKey: false,
@@ -79,6 +81,8 @@ const validate = (user) => {
     role: joi.string(),
     phone: joi.string(),
     schedule: joi.array(),
+    img: joi.string(),
+    description: joi.string(),
   });
   return schema.validate(user);
 };
