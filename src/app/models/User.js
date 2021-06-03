@@ -1,67 +1,94 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const Convert = require("../../util/mongoose");
+const joi = require("joi");
+const bcrypt = require("bcryptjs");
 
-const UserSchema = new Schema(
+const salt = "$2a$12$t7M3OgpA4ML85VAwnlI10.";
+
+const ScheduleSchema = mongoose.Schema(
   {
-    name: { type: String },
-    phone: { type: String },
-    email: String,
+    day: String,
+    time: [String],
+  },
+  { _id: false }
+);
+
+const userSchema = new mongoose.Schema(
+  {
+    name: String,
+    email: {
+      type: String,
+      unique: true,
+    },
+    phone: String,
     password: String,
-    role: { type: String, default: "guess" },
-    balance: { type: Number, default: 0 },
+    role: {
+      type: String,
+      enum: ["admin", "tutor", "guest"],
+      default: "guest",
+    },
+    balance: {
+      type: Number,
+      default: 0,
+    },
+    rating: Number,
+    education: String,
+    schedule: {
+      type: [ScheduleSchema],
+      default: undefined,
+    },
+    achieve: {
+      type: [String],
+      default: undefined,
+    },
+    img: String,
+    description: String,
   },
   {
     versionKey: false,
   }
 );
 
-const UserModel = mongoose.model("user", UserSchema);
-
-class User {
-  async signup(data, result) {
-    let user = {};
-    let doc = new UserModel(data);
-    await doc
-      .save()
-      .then((doc) => {
-        result.status = "success";
-        user.id = doc._id;
-        user.name = doc.name;
-        user.role = doc.role;
-        user.balance = doc.balance;
-        user.phone = doc.phone;
-        user.email = doc.email;
-        result.user = user;
-      })
-      .catch((err) => {
-        console.log(err);
-        result.status = "fail";
-      });
+userSchema.pre("save", async function (next) {
+  //check password is modified or not
+  if (!this.isModified("password")) {
+    console.log("line 32 userModel password is not modified");
+    return next();
   }
 
-  async login(data, result) {
-    console.log(data);
-    let user = {};
-    await UserModel.find({ email: data.email, password: data.password })
-      .then((doc) => {
-        if (doc.length > 0) {
-          result.status = "success";
-          user.id = doc[0]._id;
-          user.name = doc[0].name;
-          user.email = doc[0].email;
-          user.phone = doc[0].phone;
-          user.role = doc[0].role;
-          user.balance = doc[0].balance;
-          result.user = user;
-        } else {
-          result.status = "fail";
-        }
-      })
-      .catch(() => {
-        result.status = "fail";
-      });
-  }
-}
+  //hashing password
+  this.password = await (
+    await bcrypt.hash(this.password, salt)
+  ).slice(salt.length);
+  //remove salt from hashed password
+  next();
+});
 
-module.exports = new User();
+userSchema.methods.comparePassword = async function (
+  typedPassword,
+  originalPassword
+) {
+  return await bcrypt.compare(typedPassword, salt.concat(originalPassword));
+};
+
+const validate = (user) => {
+  const schema = joi.object({
+    name: joi.string().min(2).max(50).required(),
+    email: joi.string().email().min(8).max(255).required(),
+    password: joi.string().min(4).required(),
+    rating: joi.number().min(0),
+    balance: joi.number().min(0),
+    education: joi.string(),
+    role: joi.string(),
+    phone: joi.string(),
+    schedule: joi.array(),
+    img: joi.string(),
+    description: joi.string(),
+  });
+  return schema.validate(user);
+};
+
+const User = mongoose.model("user", userSchema);
+module.exports = {
+  User,
+  validate,
+};
