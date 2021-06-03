@@ -33,7 +33,7 @@ class CourseController {
         course: req.body.course_id,
         time: req.body.time,
       });
-      req.body.confirmLink = `http://localhost:3000/xac-nhan/${order._id}`;
+      req.body.confirmLink = `https://www.giasuviet.online/xac-nhan/${order._id}`;
       console.log(req.body.confirmLink);
       next();
     } catch (err) {
