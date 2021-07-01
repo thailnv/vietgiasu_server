@@ -115,7 +115,12 @@ class SiteController {
       );
 
       if (!user || !(await user.comparePassword(password, user.password))) {
-        res.status(401).send("email or password is incorrect!");
+        res
+          .status(401)
+          .json({
+            status: "fail",
+            message: "Email hoặc mật khẩu không chính xác !",
+          });
         return;
       }
 

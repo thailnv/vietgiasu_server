@@ -50,16 +50,13 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
   //check password is modified or not
-  if (!this.isModified("password")) {
-    console.log("line 32 userModel password is not modified");
-    return next();
+  if (this.isModified("password")) {
+    //hashing password
+    this.password = await (
+      await bcrypt.hash(this.password, salt)
+    ).slice(salt.length);
+    //remove salt from hashed password
   }
-
-  //hashing password
-  this.password = await (
-    await bcrypt.hash(this.password, salt)
-  ).slice(salt.length);
-  //remove salt from hashed password
   next();
 });
 

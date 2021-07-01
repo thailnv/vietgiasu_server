@@ -15,9 +15,19 @@ class CourseController {
   }
 
   async findAll(req, res, next) {
-    let courses = await Course.find({})
+    let query = {};
+    if (req.query.name) {
+      query = {
+        name: {
+          $regex: req.query.name,
+          $options: "i",
+        },
+      };
+    }
+    let courses = await Course.find(query)
       .populate("tutor", "name")
-      .select("-schedule -description -plan");
+      .select("-schedule -description -plan")
+      .sort("-_id");
     res.json({ courses });
   }
 
