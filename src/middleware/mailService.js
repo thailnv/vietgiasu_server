@@ -58,7 +58,18 @@ function createConfirmEmail(mInfo) {
   };
 }
 
-const scheduleEmail = async (req, res, next) => {
+function createCancelEmail(mInfo) {
+  console.log(mInfo.tutor_email);
+  return {
+    subject: `Đăng ký không thành công`,
+    to: mInfo.tutor_email,
+    from: `Gia sư Việt <18521381@gm.uit.edu.vn>`,
+    html: `<div style="text-align: center">Khóa học "<strong>${mInfo.course_name}</strong>" đăng ký không thành công. Gia sư đã từ chối dạy học. 
+    Chúng tôi xin lỗi vì sự bất tiện này.</div>`,
+  };
+}
+
+const sendOrderEmail = async (req, res, next) => {
   try {
     let emailMessage = createConfirmEmail(req.body);
     await sendEmail(emailMessage)
@@ -78,6 +89,29 @@ const scheduleEmail = async (req, res, next) => {
     });
   }
 };
+
+const sendCancelEmail = async (req, res, next) => {
+  try {
+    let emailMessage = createCancelEmail(req.body);
+    await sendEmail(emailMessage)
+      .then()
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log("email sent");
+    res.status(200).json({
+      status: "success",
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: "fail",
+      message: "Có lỗi xảy ra vui lòng thử lại sau",
+    });
+  }
+};
+
 module.exports = {
-  scheduleEmail,
+  sendOrderEmail,
+  sendCancelEmail,
 };

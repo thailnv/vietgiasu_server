@@ -30,6 +30,12 @@ class OrderController {
           user.balance += req.body.tutorEarn;
           await user.save();
         }
+        if (req.body.status === "denied") {
+          let course = await Course.findById(order.course);
+          let user = await User.findById(course.student);
+          user.balance += req.body.tutorEarn / 0.6;
+          await user.save();
+        }
         res.status(201).json({
           status: "success",
         });
